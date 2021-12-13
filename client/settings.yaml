@@ -1,0 +1,6 @@
+# Parameters for the model and local training
+max_seq_length: 384
+learning_rate: 5e-5
+batch_size: 8
+epochs: 1  # For demonstration, 3 epochs are recommended
+verbose: True

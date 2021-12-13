@@ -1,0 +1,61 @@
+version: '3.3'
+services:
+  client:
+    environment:
+      - GET_HOSTS_FROM=dns
+    image: "squad-client:latest"
+    build:
+      context: .
+    working_dir: /app
+    command: /bin/bash -c "fedn run client -in client.yaml"
+    volumes:
+      - ./data/client1:/app/data
+      - ./client.yaml:/app/client.yaml
+
+#  client2:
+#    environment:
+#      - GET_HOSTS_FROM=dns
+#    image: "squad-client:latest"
+#    build:
+#      context: .
+#    working_dir: /app
+#    command: /bin/bash -c "fedn run client -in client.yaml"
+#    volumes:
+#      - ./data-small/client2:/app/data
+#      - ./client.yaml:/app/client.yaml
+
+#  client3:
+#    environment:
+#      - GET_HOSTS_FROM=dns
+#    image: "squad-client:latest"
+#    build:
+#      context: .
+#    working_dir: /app
+#    command: /bin/bash -c "fedn run client -in client.yaml"
+#    volumes:
+#      - ./data/client3:/app/data
+#      - ./client.yaml:/app/client.yaml
+#
+#  client4:
+#    environment:
+#      - GET_HOSTS_FROM=dns
+#    image: "squad-client:latest"
+#    build:
+#      context: .
+#    working_dir: /app
+#    command: /bin/bash -c "fedn run client -in client.yaml"
+#    volumes:
+#      - ./data/client4:/app/data
+#      - ./client.yaml:/app/client.yaml
+#
+#  client5:
+#    environment:
+#      - GET_HOSTS_FROM=dns
+#    image: "squad-client:latest"
+#    build:
+#      context: .
+#    working_dir: /app
+#    command: /bin/bash -c "fedn run client -in client.yaml"
+#    volumes:
+#      - ./data/client5:/app/data
+#      - ./client.yaml:/app/client.yaml

@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Global Model Testing</h5>
+            <h6 class="card-subtitle text-muted">Model testing for a given context and questions</h6>
+        </div>
+        <div class="card-body">
+            <form id="seed_upload_form">
+
+                <div class="form-group row">
+                    <label for="model_type" class="col-sm-2 col-form-label">Model Type:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="model_type" name="model_type">
+                            <option value="nlp">NLP</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+                <div class="form-group row">
+                    <label for="global_model" class="col-sm-2 col-form-label">Global model:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="global_model" name="global_model">
+                            {% for model in global_model_list %}
+                            <option>{{model}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+                <div class="form-group row">
+                    <label for="context_input" class="col-sm-2 col-form-label">Context:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="context_input" name="context_input" rows="9">{{paragraph}}</textarea>
+                    </div>
+                </div>
+
+                <br>
+                <div class="form-group row">
+                    <label for="question_input" class="col-sm-2 col-form-label">Question:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="question_input" name="question_input">
+                            {% for question in question_list %}
+                            <option>{{question}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!--<div class="col-sm-10">
+                        <input class="form-control" id="question_input" name="question_input" placeholder="your question here...."/>
+                    </div>-->
+                </div>
+                <br>
+                <br>
+                <center>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                          <button type="button" class="btn btn-primary">Predict Answer!</button>
+                          <button type="reset" class="btn btn-secondary"> Reset </button>
+                        </div>
+                    </div>
+
+                    <br>
+                    <a id="msg"></a>
+
+                </center>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+

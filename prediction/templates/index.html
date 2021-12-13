@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% if refresh %}
+        <meta http-equiv="refresh" content="5">
+    {% endif %}
+
+    <title>FED-QAS</title>
+
+    <link rel="canonical" href="https://appstack.bootlab.io/pages-blank.html"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='dist/css/light.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+    <!-- js files for datatables -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+    <!--<script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap5.min.js"></script>-->
+</head>
+
+<body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-content js-simplebar">
+            <a class="sidebar-brand" href="/">
+                <img height="50" src="static/img/fedqas.png"/>
+            </a>
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/global-models">
+                            <i class="align-middle" data-feather="layers"></i>
+                            <span class="align-middle">Models</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/testing">
+                            <i class="align-middle" data-feather="settings"></i>
+                            <span class="align-middle">Testing</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/">
+                            <i class="align-middle" data-feather="sliders"></i>
+                            <span class="align-middle">Prediction</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/active-learning">
+                            <i class="align-middle" data-feather="user-check"></i>
+                            <span class="align-middle">Active learning</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/about">
+                            <i class="align-middle" data-feather="info"></i>
+                            <span class="align-middle">About</span>
+                        </a>
+                    </li>
+
+                </ul>
+        </div>
+    </nav>
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+            <div class="navbar-collapse collapse">
+
+                <ul class="navbar-nav navbar-align">
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-icon dropdown-toggle" href="https://scaleoutsystems.github.io/fedn/">
+                            <div class="position-relative">
+                                <i class="align-middle" data-feather="help-circle"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="content">
+            <div class="container-fluid p-0">
+                <h1 class="h3 mb-3"></h1>
+                <div class="row">
+                    <div class="col-12">
+                        {% block content %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-6 text-start">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a class="text-muted" href="/about">About</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">
+                            &copy; 2021 - <a href="#" class="text-muted"></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='dist/js/app.js') }}"></script>
+<script src="{{ url_for('static', filename='js/style.js') }}"></script>
+</body>
+
+</html>

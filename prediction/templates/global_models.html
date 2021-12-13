@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <!-- global models table-->
+    <script>
+        $(document).ready(function() {
+        $('#all_models').DataTable({
+        });
+    } );
+    </script>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Global Models List</h5>
+            <h6 class="card-subtitle text-muted">Trained global models (weights) by FEDn</h6>
+        </div>
+
+        <div class="card-body">
+            <table id="all_models" class="table">
+                <thead>
+                <tr>
+                    <th>Model ID</th>
+                    <th>Committed at</th>
+                    <th>Size</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for model in global_model_list %}
+                    <tr>
+                        <td>{{ model.object_name }}</td>
+                        <td>{{ model.last_modified }}</td>
+                        <td>{{ model.size }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    </div>
+    </div>
+{% endblock %}
+

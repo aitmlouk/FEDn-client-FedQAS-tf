@@ -1,0 +1,13 @@
+# Parameters for data processing
+max_seq_length: 384
+
+# Parameters for MongoDB and model serving feedback
+mongo_host: 'mongodb://fedn_admin:password@localhost:6534'
+network_id: 'fedn-test-network'
+
+# Parameters for Minio and global models
+minio_host: 'localhost:9000'
+access_key: 'fedn_admin'
+secret_key: 'password'
+secure: False
+bucket: 'fedn-models'

@@ -1,0 +1,195 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Federated Active Learning</h5>
+            <h6 class="card-subtitle text-muted">Annotate local data for active learning</h6>
+        </div>
+        <div class="card-body">
+            <div class="m-3 justify-content-center">
+              <form class="mb-3">
+                  <div class="form-group row">
+                    <label for="paragraph" class="col-sm-2 col-form-label">Paragraph:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="paragraph" rows="4" placeholder="Write your paragraph here"></textarea>
+                        <input type="hidden" id="paragraph_id">
+                        <input type="hidden" id="paragraph_changed" value="false">
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="form-group row">
+                    <label for="question" class="col-sm-2 col-form-label">Question:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="question" placeholder="Write your question">
+                        <input type="hidden" id="question_id">
+                        <input type="hidden" id="question_changed" value="false">
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="form-group row">
+                    <label for="answer" class="col-sm-2 col-form-label">Answer:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="answer" placeholder="Write your answer">
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="form-group row">
+                    <label for="answer_start" class="col-sm-2 col-form-label">Answer start:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="answer_start" placeholder="Answer start from 123.">
+                    </div>
+                  </div>
+
+                    <br>
+
+                    <center>
+                        <button type="button" class="btn btn-primary" onclick="handleSubmit()"> Add </button>
+                        <button type="button" class="btn btn-primary" onclick="changeQuestion()" > Change Question </button>
+                        <button type="reset" class="btn btn-primary" > Reset </button>
+                    </center>
+              </form>
+                <center>
+                    <a href="/getdata"><button class='btn btn-info'>Generate dataset</button></a>
+                </center>
+            </div>
+
+            <script
+              src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+              crossorigin="anonymous">
+            </script>
+            <script
+              src="https://code.jquery.com/jquery-3.6.0.min.js"
+              integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+              crossorigin="anonymous">
+            </script>
+            <script>
+              //Global variables
+              const ip = "130.243.192.189:5000"
+              // Submit the question and empty the answer input to be available for another answer
+              $( "#submit" ).click(function() {
+                SubmitAnswers()
+              });
+
+              // Add new question
+              $( "#other_question" ).click(function() {
+                FormClean('other_question')
+              });
+
+              // Add new Paragraph
+              $( "#other_paragraph" ).click(function() {
+                FormClean('other_paragraph')
+              });
+
+
+              /* Custom functions for all the 4 buttons */
+              function checkValue (input) {
+                if (input === 'paragraph') {
+                  $('#paragraph').removeClass('border-danger')
+                } else if (input === 'question') {
+                  $('#question').removeClass('border-danger')
+                } else {
+                  $('#answer').removeClass('border-danger')
+                }
+              }
+
+              // when the submit button clicked this function will fire
+              function SubmitAnswers() {
+                var question = $('#question').val()
+                var paragraph = $('#paragraph').val()
+                var answer = $('#answer').val()
+                var answer_start = $('#answer_start').val()
+                var paragraph_id = $('#paragraph_id').val()
+                var question_id = $('#question_id').val()
+
+                if (answer === '' || paragraph === '' || answer === ''){
+                  if (answer === '') {
+                    $('#answer').addClass('border-danger')
+                  }
+                  if (answer_start === '') {
+                    $('#answer_start').addClass('border-danger')
+                  }
+                  if (question === '') {
+                    $('#question').addClass('border-danger')
+                  }
+                  if (paragraph === '') {
+                    $('#paragraph').addClass('border-danger')
+                  }
+                } else {
+                  var data = {
+                    'paragraph': paragraph,
+                    'question': question,
+                    'answer': answer,
+                    'answer_start': answer_start,
+                    'paragraph_id': paragraph_id,
+                    'question_id': question_id,
+                  }
+                  SendDataToBackend(data)
+                }
+              }
+
+              function SendDataToBackend (data) {
+                //change the address ip and the port
+                var url = `http://${ip}/annotator`
+                $.ajax({
+                  type: "POST",
+                  url: url,
+                  contentType: "application/json",
+                  data: JSON.stringify(data),
+                  success: function(response){
+                    var res = JSON.parse(response);
+                    var p_aragraph_id = (res.paragraph_id);
+                    var q_uestion_id = (res.question_id);
+                    $('#paragraph_id').val(p_aragraph_id);
+                    $('#question_id').val(q_uestion_id);
+
+                    FormClean('other_answer')
+
+                    $('#other_question').removeClass('d-none')
+                    $('#other_paragraph').removeClass('d-none')
+                    $('#generate_button').removeClass('d-none')
+                  },
+                });
+              }
+
+              //Generate Json File
+              function GenerateFile() {
+                var url = `http://${ip}/generate_file`
+                $.ajax({
+                  type: 'GET',
+                  url: url,
+                  contentType: "application/json",
+                })
+              }
+              // This function will clean the input based on what passed in its param to it make available for new data
+              /* if the user press on submit the answer will be send to backend and do some stuff with it there
+              otherwise if he press on 'Ask another question' the input field for 'ask your question ab...' will be empty
+              same logic goes with 'new para..' button when it's clicked */
+              function FormClean(inputName) {
+                if (inputName === 'other_answer') {
+                  $('#answer').val('')
+                  $('#answer_start').val('')
+                } else if (inputName === 'other_question') {
+                  $('#question').val('')
+                  $('#answer').val('')
+                  $('#answer_start').val('')
+                  $('#question_id').val('')
+                } else {
+                  $('#paragraph').val('')
+                  $('#question').val('')
+                  $('#answer').val('')
+                  $('#answer_start').val('')
+                  $('#paragraph_id').val('')
+                }
+              }
+    </script>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+
