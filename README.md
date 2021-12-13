@@ -14,27 +14,15 @@ shell script will configure and start a client on a blank Ubuntu 20.04 LTS VM:
 sudo apt-get update
 sudo sudo snap install docker
 
-# clone the fedqas-keras example
-git clone https://github.com/aitmlouk/FEDn-client-fedqas-keras.git
-cd FEDn-client-fedqas-keras
+# clone the FEDn-client-FedQAS-tf project
+git clone https://github.com/aitmlouk/FEDn-client-FedQAS-tf.git
+cd FEDn-client-FedQAS-tf
 
-# if no available data, download it from archive
-# wget https://archive.org/download/data_20211213/data.zip
-# sudo apt install unzip
-# unzip data.zip
-# sudo rm data.zip
+# if no available initial_model, generate a new one 'python client/init_model.py'
 
 # Make sure you have edited extra-hosts.yaml to provide hostname mappings for combiners
-# Make sure you have edited fedn-network.yaml to provide hostname mappings for reducer
+# Make sure you have edited client.yaml to provide hostname mappings for reducer
 sudo docker-compose -f docker-compose.yaml -f extra-hosts.yaml up --build
-```
-
-### Start prediction- Global model serving
-We have made it possible to use the trained global model for testing, prediction and annotation, to start the UI make sure that the base_services (fedn/config) is
-is started and run the flask app (python prediction/app.py)
-```bash
-# prediction/
-python app.py
 ```
 
 ### Configuring the tests
@@ -61,6 +49,13 @@ The model architecture is specified in the file 'client/init_model.py'. This scr
 ```bash
 # client/models
 python init_model.py 
+```
+### Start prediction- Global model serving
+We have made it possible to use the trained global model for testing, prediction and annotation, to start the UI make sure that the base_services (fedn/config) is
+is started and run the flask app (python prediction/app.py)
+```bash
+# prediction/
+python app.py
 ```
 
 ## License
