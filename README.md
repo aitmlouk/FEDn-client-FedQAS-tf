@@ -58,5 +58,16 @@ is started and run the flask app (python prediction/app.py)
 python app.py
 ```
 
+## Cite this work
+```
+@misc{aitmlouk2022fedqas,
+      title={FedQAS: Privacy-aware machine reading comprehension with federated learning}, 
+      author={Addi Ait-Mlouk and Sadi Alawadi and Salman Toor and Andreas Hellander},
+      year={2022},
+      eprint={2202.04742},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
 ## License
 Apache-2.0 (see LICENSE file for full information).
